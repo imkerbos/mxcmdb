@@ -1,0 +1,43 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Air 热更新
+tmp/
+build-errors.log
+
+# 构建产物
+dist/
+/server
+
+# Go
+vendor/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+coverage.out
+
+# 前端
+web/node_modules/
+web/dist/
+
+# 环境配置
+.env
+.env.local
+configs/config.yaml
+!configs/config.example.yaml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+deploy/dev/.env
+deploy/prod/.env
