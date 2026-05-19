@@ -1,0 +1,103 @@
+services:
+  postgres:
+    container_name: mxcmdb-postgres
+    image: postgres:18-alpine
+    ports:
+      - "${MXCMDB_DB_PORT:-5432}:5432"
+    environment:
+      POSTGRES_USER: ${MXCMDB_DB_USER:-mxcmdb}
+      POSTGRES_PASSWORD: ${MXCMDB_DB_PASSWORD:?请在 .env 中设置 MXCMDB_DB_PASSWORD}
+      POSTGRES_DB: ${MXCMDB_DB_NAME:-mxcmdb}
+      TZ: Asia/Shanghai
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${MXCMDB_DB_USER:-mxcmdb}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "3"
+
+  redis:
+    container_name: mxcmdb-redis
+    image: redis:7-alpine
+    ports:
+      - "${MXCMDB_REDIS_PORT:-6379}:6379"
+    command: >
+      redis-server
+      --appendonly yes
+      ${MXCMDB_REDIS_PASSWORD:+--requirepass ${MXCMDB_REDIS_PASSWORD}}
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+  api:
+    container_name: mxcmdb-api-prod
+    build:
+      context: ../..
+      dockerfile: deploy/Dockerfile
+    ports:
+      - "${MXCMDB_SERVER_PORT:-10030}:10030"
+    env_file: .env
+    environment:
+      - CONFIG_PATH=/app/configs/config.yaml
+      - MXCMDB_DB_HOST=postgres
+      - MXCMDB_REDIS_HOST=redis
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./config.yaml:/app/configs/config.yaml:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:10030/api/v1/auth/captcha"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "3"
+
+  web:
+    container_name: mxcmdb-web-prod
+    build:
+      context: ../..
+      dockerfile: deploy/prod/Dockerfile.web
+    ports:
+      - "3800:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+volumes:
+  pgdata:
+  redisdata:

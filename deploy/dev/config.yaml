@@ -1,0 +1,38 @@
+server:
+  port: 10030
+  mode: debug
+
+database:
+  host: host.docker.internal
+  port: 5432
+  user: mxcmdb
+  password: "mxcmdb123"
+  dbname: mxcmdb
+  sslmode: disable
+
+redis:
+  host: host.docker.internal
+  port: 16379
+  password: ""
+  db: 0
+
+jwt:
+  secret: "mxcmdb-jwt-secret-change-me"
+  access_expire: 7200
+  refresh_expire: 604800
+
+captcha:
+  enabled: true
+  length: 4
+  expire: 300
+
+mfa:
+  enabled: true
+  issuer: "MXCMDB"
+
+log:
+  level: debug
+  format: text
+
+encryption:
+  master_key: "mxcmdb-encryption-key-change-me-in-production"

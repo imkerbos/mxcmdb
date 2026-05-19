@@ -1,0 +1,41 @@
+# 生产环境基础配置
+# 敏感值（密码、密钥）通过 .env 环境变量覆盖，此文件仅存放默认值
+
+server:
+  port: 10030
+  mode: release
+
+database:
+  host: localhost
+  port: 5432
+  user: mxcmdb
+  password: ""
+  dbname: mxcmdb
+  sslmode: disable
+
+redis:
+  host: localhost
+  port: 6379
+  password: ""
+  db: 0
+
+jwt:
+  secret: ""
+  access_expire: 7200
+  refresh_expire: 604800
+
+captcha:
+  enabled: true
+  length: 4
+  expire: 300
+
+mfa:
+  enabled: true
+  issuer: "MXCMDB"
+
+log:
+  level: info
+  format: json
+
+encryption:
+  master_key: ""

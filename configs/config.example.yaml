@@ -1,0 +1,38 @@
+server:
+  port: 10030
+  mode: debug  # debug / release
+
+database:
+  host: localhost
+  port: 5432
+  user: mxcmdb
+  password: "mxcmdb123"
+  dbname: mxcmdb
+  sslmode: disable
+
+redis:
+  host: localhost
+  port: 16379
+  password: ""
+  db: 0
+
+jwt:
+  secret: "mxcmdb-jwt-secret-change-me"
+  access_expire: 7200       # seconds
+  refresh_expire: 604800    # seconds
+
+captcha:
+  enabled: true
+  length: 4                  # 验证码位数
+  expire: 300                # 验证码过期时间（秒）
+
+mfa:
+  enabled: true
+  issuer: "MXCMDB"
+
+log:
+  level: debug
+  format: text              # json / text
+
+encryption:
+  master_key: "mxcmdb-encryption-key-change-me-in-production"  # AES-256 加密主密钥

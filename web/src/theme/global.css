@@ -1,0 +1,142 @@
+/* ===== BlueKing-inspired Global Styles ===== */
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  min-height: 24px;
+  border-radius: 20px;
+  background-color: #dcdee5;
+  transition: background-color 0.2s;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #979ba5;
+}
+::-webkit-scrollbar-track:hover {
+  background: #f0f1f5;
+}
+
+/* Page background */
+html, body, #root {
+  background: #f5f7fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Micro-animations ===== */
+
+/* Card fade-in on mount */
+.ant-card {
+  animation: cardFadeIn 0.35s ease-out;
+}
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Card hover lift */
+.ant-card-hoverable {
+  transition: box-shadow 0.3s ease, transform 0.3s ease !important;
+}
+.ant-card-hoverable:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  transform: translateY(-2px);
+}
+
+/* Table row transition */
+.ant-table-tbody > tr {
+  transition: background-color 0.25s ease !important;
+}
+
+/* Button hover glow */
+.ant-btn-primary:not(:disabled):hover {
+  box-shadow: 0 2px 8px rgba(58, 132, 255, 0.35);
+}
+
+/* Tag smooth */
+.ant-tag {
+  transition: all 0.2s ease;
+}
+
+/* Modal smooth entrance */
+.ant-modal {
+  animation-duration: 0.25s !important;
+}
+
+/* Input focus glow */
+.ant-input:focus,
+.ant-input-focused,
+.ant-input-affix-wrapper-focused {
+  box-shadow: 0 0 4px rgba(58, 132, 255, 0.4) !important;
+}
+
+/* Select dropdown option hover */
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background-color: #eaf3ff !important;
+}
+
+/* Progress bar animation */
+.ant-progress-bg {
+  transition: width 0.6s cubic-bezier(0.23, 1, 0.23, 1) !important;
+}
+
+/* Stat number count-up feel */
+.stat-value {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.stat-value:hover {
+  transform: scale(1.05);
+}
+
+/* Status dot pulse for running */
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.status-dot-running {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* Skeleton shimmer for loading states */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Popconfirm / Popover smooth */
+.ant-popover {
+  animation-duration: 0.2s !important;
+}
+
+/* Drawer slide */
+.ant-drawer-content-wrapper {
+  transition: transform 0.25s cubic-bezier(0.23, 1, 0.23, 1) !important;
+}
+
+/* Pagination hover */
+.ant-pagination-item {
+  transition: all 0.15s ease !important;
+}
+.ant-pagination-item:hover {
+  background-color: #eaf3ff !important;
+}
+
+/* Message notification slide */
+.ant-message-notice {
+  animation-duration: 0.3s !important;
+}
+
+/* Badge pulse */
+.ant-badge-status-processing::after {
+  animation-duration: 1.5s !important;
+}
+
+/* Login card entrance */
+@keyframes loginCardIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
